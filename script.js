@@ -231,4 +231,3 @@ $.ajax('https://api.twelvedata.com/time_series?apikey=0091044c6c0c411283120de387
     
 
 }
-

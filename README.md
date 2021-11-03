@@ -14,13 +14,16 @@ A web page which analyze stocks
 
 2. Screenshots:
 
+![Userstories.Data.Wireframe](IMG_4029.jpg)
 
 ***
 
 
 3. Getting Started
 
-***
+   click  ------ [Github - Stock Analysis ](https://idewjee.github.io/Project1.1-/ "Stock Analysis")
+
+ ***
 
 4. Future enhancment: 
 * Allowing users to edit time frame, no set time frame 

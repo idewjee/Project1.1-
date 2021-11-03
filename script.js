@@ -1,7 +1,7 @@
 // Constants - Data that doesn't change 
-//const BASE_URL = ' https://api.twelvedata.com/time_series?'
+const BASE_URL = ' https://api.twelvedata.com/time_series?'
 
-//const API_URL = '0091044c6c0c411283120de387ceacc1'
+const API_URL = '0091044c6c0c411283120de387ceacc1'
 
 // Variables - Data that changes 
 
@@ -139,7 +139,7 @@ $.ajax('https://api.twelvedata.com/time_series?apikey=0091044c6c0c411283120de387
 
    
 
-    // Getting the data to show on the screen 
+    // Getting the data to show on the screen in the graph 
     $amount1.text (curreny);
     $amount2.text (curreny1);
     $amount3.text (curreny2);
@@ -161,7 +161,7 @@ $.ajax('https://api.twelvedata.com/time_series?apikey=0091044c6c0c411283120de387
     $timeframe9.text (data.values[8].datetime);
     $timeframe10.text (data.values[9].datetime);
 
-    // Should you buy or sell the stock base on the intervals and show either green or red to buy or not buy the stock
+    // difference in price from starting value to ending value based on interval and stock choosen
     const diff = (data.values[0].low) - (data.values[9].low);
 
     let final = new Intl.NumberFormat ("en-US", {
@@ -170,38 +170,22 @@ $.ajax('https://api.twelvedata.com/time_series?apikey=0091044c6c0c411283120de387
         currency: 'USD'
     }).format (diff);
 
+    $stockChange.text (final);
+    // change color based on price change (green for postive and red for negative )
+    const div = document.getElementById("stockChange");
+
+    if (diff > 0){
+        div.style.color = "green"
+    } else {
+        div.style.color = "red"
+    }
+
+ // difference in percentage from starting value to ending value based on interval and stock choosen
     const divdiff = ((data.values[0].low) - (data.values[9].low))/ (data.values[9].low)
 
-    console.log (divdiff);
-
-
-    
-    if (stockInterval === '1min'){
-        $buyOrSell.text ("The return for the stock in the last 10 minutes was:  ")
-    } else if (stockInterval === "5min") {
-        $buyOrSell.text ("The return for the stock in the last 10 minutes was:  ");
-    } else if (stockInterval === "15min") {
-        $buyOrSell.text ("The return for the stock in the last 2 and a half hours was:  ");
-    } else if (stockInterval === "30min") {
-        $buyOrSell.text ("The return for the stock in the last 5 hours was:  ");
-    } else if (stockInterval === "1h") {
-        $buyOrSell.text ("The return for the stock in the last 10 hours was:  ");
-    } else if (stockInterval === "2h") {
-        $buyOrSell.text ("The return for the stock in the last 20 hours was:  ");
-    } else if (stockInterval === "1day") {
-        $buyOrSell.text ("The return for the stock in the last 10 days was:  ");
-    } else if (stockInterval === "1week") {
-        $buyOrSell.text ("The return for the stock in the last 10 weeks was:  ");
-    } else if (stockInterval === "1month") {
-        $buyOrSell.text ("The return for the stock in the last 10 months was:  ");
-    } 
-
-    
     $percent.text ((divdiff* 100).toFixed(2) +"%");
 
-    $stockChange.text (final);
-
-    const div = document.getElementById("stockChange");
+// change color based on percentage change (green for postive and red for negative )
 
     const div1 = document.getElementById("perentageChange");
 
@@ -213,18 +197,32 @@ $.ajax('https://api.twelvedata.com/time_series?apikey=0091044c6c0c411283120de387
         div1.style.color = "red"
     }
 
-    if (diff > 0){
-        div.style.color = "green"
-    } else {
-        div.style.color = "red"
-    }
+// Reiterates what the user is looking at based off stock and time period 
+    
+    if (stockInterval === '1min'){
+        $buyOrSell.text ("The return for " +stockSymbol+  " in the last 10 minutes was:  ")
+    } else if (stockInterval === "5min") {
+        $buyOrSell.text ("The return for " +stockSymbol+  " in the last 10 minutes was:  ");
+    } else if (stockInterval === "15min") {
+        $buyOrSell.text ("The return for " +stockSymbol+  " in the last 2 and a half hours was:  ");
+    } else if (stockInterval === "30min") {
+        $buyOrSell.text ("The return for " +stockSymbol+  " in the last 5 hours was:  ");
+    } else if (stockInterval === "1h") {
+        $buyOrSell.text ("The return for " +stockSymbol+  " in the last 10 hours was:  ");
+    } else if (stockInterval === "2h") {
+        $buyOrSell.text ("The return for " +stockSymbol+  " in the last 20 hours was:  ");
+    } else if (stockInterval === "1day") {
+        $buyOrSell.text ("The return for " +stockSymbol+  " in the last 10 days was:  ");
+    } else if (stockInterval === "1week") {
+        $buyOrSell.text ("The return for " +stockSymbol+  " in the last 10 weeks was:  ");
+    } else if (stockInterval === "1month") {
+        $buyOrSell.text ("The return for " +stockSymbol+  " in the last 10 months was:  ");
+    } 
 
 
 
 
-
-    // Trying to get certain variables from my data 
-
+    // if ajax function doesn't work 
 
 }, function(error){
     console.log ('promise failed')

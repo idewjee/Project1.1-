@@ -30,11 +30,9 @@
    const $timeframe9 = $('#timeframe9');
    const $timeframe10 = $('#timeframe10');
 
-   let return1;
-   let value1;
-
    const $buyOrSell = $('#buyOrSell');
    const $stockChange = $('#stockChange');
+   const $percent= $('#perentageChange');
 
    const $fomr = $('form');
    const $input = $('input[type="text"]');
@@ -66,25 +64,73 @@ function handleSubmit (evt) {
 // ajax
 
 $.ajax('https://api.twelvedata.com/time_series?apikey=0091044c6c0c411283120de387ceacc1&symbol='+stockSymbol+'&interval='+stockInterval)
-.then(function (data){
-    console.log ('promise fulfield')
-    console.log (data)
-
-    console.log (data.meta.currency)
-
-    console.log (data.values[0].low)
+.then(function (data){ 
 
     // Changing value to currency 
-    for (let i = 0; i <= 10; i++){
-        return1 = (data.values[i].low)
-
-    value1 = new Intl.NumberFormat ("en-US", {
+    let curreny = new Intl.NumberFormat ("en-US", {
 
         style: 'currency',
         currency: 'USD'
-    }).format (return1);
+    }).format (data.values[0].low);
 
-    }
+    
+    let curreny1 = new Intl.NumberFormat ("en-US", {
+
+        style: 'currency',
+        currency: 'USD'
+    }).format (data.values[1].low);
+
+
+    let curreny2 = new Intl.NumberFormat ("en-US", {
+
+        style: 'currency',
+        currency: 'USD'
+    }).format (data.values[2].low);
+
+    let curreny3 = new Intl.NumberFormat ("en-US", {
+
+        style: 'currency',
+        currency: 'USD'
+    }).format (data.values[3].low);
+
+    let curreny4 = new Intl.NumberFormat ("en-US", {
+
+        style: 'currency',
+        currency: 'USD'
+    }).format (data.values[4].low);
+
+    let curreny5 = new Intl.NumberFormat ("en-US", {
+
+        style: 'currency',
+        currency: 'USD'
+    }).format (data.values[5].low);
+
+    let curreny6 = new Intl.NumberFormat ("en-US", {
+
+        style: 'currency',
+        currency: 'USD'
+    }).format (data.values[6].low);
+
+    let curreny7 = new Intl.NumberFormat ("en-US", {
+
+        style: 'currency',
+        currency: 'USD'
+    }).format (data.values[7].low);
+
+    let curreny8 = new Intl.NumberFormat ("en-US", {
+
+        style: 'currency',
+        currency: 'USD'
+    }).format (data.values[8].low);
+
+    let curreny9 = new Intl.NumberFormat ("en-US", {
+
+        style: 'currency',
+        currency: 'USD'
+    }).format (data.values[9].low);
+
+
+
 
 
 
@@ -94,16 +140,16 @@ $.ajax('https://api.twelvedata.com/time_series?apikey=0091044c6c0c411283120de387
    
 
     // Getting the data to show on the screen 
-    $amount1.text (data.values[0].low);
-    $amount2.text (data.values[1].low);
-    $amount3.text (data.values[2].low);
-    $amount4.text (data.values[3].low);
-    $amount5.text (data.values[4].low);
-    $amount6.text (data.values[5].low);
-    $amount7.text (data.values[6].low);
-    $amount8.text (data.values[7].low);
-    $amount9.text (data.values[8].low);
-    $amount10.text (data.values[9].low);
+    $amount1.text (curreny);
+    $amount2.text (curreny1);
+    $amount3.text (curreny2);
+    $amount4.text (curreny3);
+    $amount5.text (curreny4);
+    $amount6.text (curreny5);
+    $amount7.text (curreny6);
+    $amount8.text (curreny7);
+    $amount9.text (curreny8);
+    $amount10.text (curreny9);
     $timeframe1.text (data.values[0].datetime);
     $timeframe2.text (data.values[1].datetime);
     $timeframe3.text (data.values[2].datetime);
@@ -117,7 +163,6 @@ $.ajax('https://api.twelvedata.com/time_series?apikey=0091044c6c0c411283120de387
 
     // Should you buy or sell the stock base on the intervals and show either green or red to buy or not buy the stock
     const diff = (data.values[0].low) - (data.values[9].low);
-    console.log (diff); 
 
     let final = new Intl.NumberFormat ("en-US", {
 
@@ -125,9 +170,10 @@ $.ajax('https://api.twelvedata.com/time_series?apikey=0091044c6c0c411283120de387
         currency: 'USD'
     }).format (diff);
 
+    const divdiff = ((data.values[0].low) - (data.values[9].low))/ (data.values[9].low)
 
+    console.log (divdiff);
 
-    console.log (stockInterval);
 
     
     if (stockInterval === '1min'){
@@ -138,9 +184,9 @@ $.ajax('https://api.twelvedata.com/time_series?apikey=0091044c6c0c411283120de387
         $buyOrSell.text ("The return for the stock in the last 2 and a half hours was:  ");
     } else if (stockInterval === "30min") {
         $buyOrSell.text ("The return for the stock in the last 5 hours was:  ");
-    } else if (stockInterval === "1hr") {
+    } else if (stockInterval === "1h") {
         $buyOrSell.text ("The return for the stock in the last 10 hours was:  ");
-    } else if (stockInterval === "2hr") {
+    } else if (stockInterval === "2h") {
         $buyOrSell.text ("The return for the stock in the last 20 hours was:  ");
     } else if (stockInterval === "1day") {
         $buyOrSell.text ("The return for the stock in the last 10 days was:  ");
@@ -151,12 +197,21 @@ $.ajax('https://api.twelvedata.com/time_series?apikey=0091044c6c0c411283120de387
     } 
 
     
-
+    $percent.text ((divdiff* 100).toFixed(2) +"%");
 
     $stockChange.text (final);
 
     const div = document.getElementById("stockChange");
 
+    const div1 = document.getElementById("perentageChange");
+
+
+
+    if (divdiff > 0){
+        div1.style.color = "green"
+    } else {
+        div1.style.color = "red"
+    }
 
     if (diff > 0){
         div.style.color = "green"
@@ -165,9 +220,11 @@ $.ajax('https://api.twelvedata.com/time_series?apikey=0091044c6c0c411283120de387
     }
 
 
+
+
+
     // Trying to get certain variables from my data 
 
-    console.log ((data.$currency));
 
 }, function(error){
     console.log ('promise failed')
